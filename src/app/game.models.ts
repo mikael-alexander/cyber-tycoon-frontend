@@ -14,3 +14,11 @@ export interface Missao {
   recompensaDinheiro: number;
   status: string;
 }
+
+export interface Funcionario {
+  id: number;
+  nome: string;
+  ataque: number;
+  defesa: number;
+  salarioDiario: number;
+}

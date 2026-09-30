@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Jogador, Missao } from '../game.models';
+import { Jogador, Missao, Funcionario } from '../game.models';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +46,19 @@ export class GameService {
     // Retorna como texto simples puro (String) enviado pelo Spring Boot
     return this.http.post(`${this.apiUrl}/missoes/${missaoId}/executar`, null, {
       params: { jogadorId: jogadorId.toString(), poderAtaque: poderAtaque.toString() },
+      responseType: 'text'
+    });
+  }
+
+  // 1. Busca os funcionários disponíveis no mercado
+  getMercadoFuncionarios(): Observable<Funcionario[]> {
+    return this.http.get<Funcionario[]>(`${this.apiUrl}/funcionarios/mercado`);
+  }
+
+  // 2. Envia a ordem de contratação
+  contratarFuncionario(funcionarioId: number, jogadorId: number): Observable<string> {
+    return this.http.post(`${this.apiUrl}/funcionarios/${funcionarioId}/contratar`, null, {
+      params: { jogadorId: jogadorId.toString() },
       responseType: 'text'
     });
   }

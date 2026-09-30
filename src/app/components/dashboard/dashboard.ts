@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GameService } from '../../services/game.service';
-import { Jogador, Missao } from '../../game.models';
+import { Jogador, Missao, Funcionario } from '../../game.models';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +15,7 @@ import { Jogador, Missao } from '../../game.models';
 export class DashboardComponent implements OnInit {
   jogador!: Jogador;
   missoes: Missao[] = [];
+  mercadoHackers: Funcionario[] = [];
   logDoJogo: string = "Bem-vindo ao Cyber Tycoon! Escolha uma missão para hackear.";
   mensagemErro: string = "";
   
@@ -51,8 +52,38 @@ export class DashboardComponent implements OnInit {
         this.missoes = lista;
         this.cdr.markForCheck();
       },
+      error: (err) => console.error("Erro ao carregar missões:", err)
+    });
+    
+    this.carregarMercado();
+  }
+
+  carregarMercado() {
+    this.gameService.getMercadoFuncionarios().subscribe({
+      next: (lista) => {
+        this.mercadoHackers = lista;
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error("Erro ao carregar mercado:", err)
+    });
+  }
+
+  contratarHacker(hacker: Funcionario) {
+    if (this.jogador.dinheiro < hacker.salarioDiario) {
+      alert(`Você não tem fundos para cobrir o primeiro dia de salário do(a) ${hacker.nome}!`);
+      return;
+    }
+
+    this.gameService.contratarFuncionario(hacker.id, this.jogador.id).subscribe({
+      next: (resultado) => {
+        this.logDoJogo = `>_ CONTRATO ASSINADO: ${resultado}`;
+        // Adiciona o poder do hacker ao poder do jogador!
+        this.poderDeAtaqueFicticio += hacker.ataque;
+        // Recarrega os dados para atualizar o dinheiro e o mercado
+        this.carregarDadosDoJogo(this.jogador.id);
+      },
       error: (err) => {
-        console.error("Erro ao carregar missões:", err);
+        alert("Erro ao contratar: " + err.error);
       }
     });
   }
@@ -91,4 +122,6 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+
 }
