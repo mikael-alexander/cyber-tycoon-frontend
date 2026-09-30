@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset global para o tema do jogo */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0c;
+  color: #e0e0e0;
+}

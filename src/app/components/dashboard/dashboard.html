@@ -1,0 +1,65 @@
+<div class="game-container" *ngIf="jogador; else loading">
+  <!-- HUD Superior -->
+  <header class="hud">
+    <div class="hud-top">
+      <h2>💻 Cyber Tycoon: Hackers & Corporations</h2>
+      <button class="btn-sair" routerLink="/">⬅ Sair</button>
+    </div>
+    <div class="stats">
+      <span><strong>Jogador:</strong> {{ jogador.nome }}</span> | 
+      <span><strong>Dia:</strong> {{ jogador.diaAtual }}</span> | 
+      <span class="money"><strong>Dinheiro:</strong> R$ {{ jogador.dinheiro | number:'1.2-2' }}</span> | 
+      <span><strong>Reputação:</strong> ⭐ {{ jogador.reputacao }}</span> |
+      <span [class.text-danger]="(jogador.missoesHoje || 0) >= 4"><strong>Ações Feitas:</strong> {{ jogador.missoesHoje || 0 }}/4</span>
+    </div>
+    <button class="btn-turno" (click)="passarDia()">⏭️ Avançar Turno</button>
+  </header>
+
+  <!-- Mural de Logs -->
+  <div class="console-log">
+    <p>>_ {{ logDoJogo }}</p>
+  </div>
+
+  <!-- Lista de Missões -->
+  <h3>🎯 Missões Disponíveis:</h3>
+  <div class="missoes-grid">
+    <div class="missao-card" *ngIf="missoes.length === 0">Nenhuma missão carregada.</div>
+    <div class="missao-card" *ngFor="let m of missoes">
+      <h4>{{ m.descricao }}</h4>
+      <p><strong>Dificuldade:</strong> 🔒 {{ m.dificuldade }}%</p>
+      <p><strong>Recompensa:</strong> 💰 R$ {{ m.recompensaDinheiro | number:'1.2-2' }}</p>
+      <button (click)="tentarHackear(m.id)" [disabled]="(jogador.missoesHoje || 0) >= 4" [class.btn-disabled]="(jogador.missoesHoje || 0) >= 4">
+        ⚡ Iniciar Invasão (Poder: {{ poderDeAtaqueFicticio }})
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TELA DE GAME OVER (VOCÊ FOI PRESO) -->
+<div class="game-over-overlay" *ngIf="(jogador?.missoesHoje || 0) >= 4 && jogador?.dinheiro < 0">
+  <div class="game-over-modal">
+    <h1 class="glitch" data-text="🚨 VOCÊ FOI PRESO 🚨">🚨 VOCÊ FOI PRESO 🚨</h1>
+    <p class="warning-text">Saldo Insuficiente: R$ {{ jogador.dinheiro | number:'1.2-2' }}</p>
+    <p>Seus fundos ficaram negativos no fim do dia e você não conseguiu cobrir seus rastros de invasão.</p>
+    <p>A Polícia Federal rastreou seus IPs e apreendeu seus servidores.</p>
+    
+    <button class="btn-game-over" (click)="deletarJogadorAtual()">Apagar Alias e Reiniciar</button>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <h2 *ngIf="!mensagemErro">Conectando ao servidor...</h2>
+    <div *ngIf="mensagemErro" style="color: red; border: 1px solid red; padding: 10px; margin: 10px;">
+      <h2>Falha de Comunicação</h2>
+      <p>{{ mensagemErro }}</p>
+      <p>Verifique:</p>
+      <ul>
+        <li>O backend Spring Boot está rodando (porta 8080)?</li>
+        <li>O Controller do Spring Boot tem a anotação <code>@CrossOrigin</code>?</li>
+        <li>Há um jogador com ID 1 cadastrado no banco de dados do backend?</li>
+      </ul>
+    </div>
+    <p *ngIf="!mensagemErro">Se a tela ficar assim por muito tempo, verifique se o backend Spring Boot (porta 8080) está rodando e se há algum erro de CORS no console do navegador.</p>
+  </div>
+</ng-template>

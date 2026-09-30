@@ -1,0 +1,263 @@
+/* Tema Cyberpunk / Hacker */
+:host {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #0a0a0c;
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Container Principal */
+.game-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* HUD Superior */
+.hud {
+  background: linear-gradient(180deg, #111b24 0%, #0a0a0c 100%);
+  border: 1px solid #00f3ff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hud h2 {
+  margin: 0;
+  color: #00f3ff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+}
+
+.btn-sair {
+  border-color: #555;
+  color: #888;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+}
+
+.btn-sair:hover {
+  border-color: #ff007f;
+  color: #ff007f;
+  background: transparent;
+  box-shadow: none;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 1.1rem;
+}
+
+.stats span {
+  background: rgba(0, 243, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.money {
+  color: #39ff14;
+  font-weight: bold;
+}
+
+/* Botões */
+button {
+  background: transparent;
+  color: #00f3ff;
+  border: 1px solid #00f3ff;
+  padding: 10px 15px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: #00f3ff;
+  color: #0a0a0c;
+  box-shadow: 0 0 15px #00f3ff;
+}
+
+.btn-turno {
+  align-self: flex-start;
+  border-color: #ff007f;
+  color: #ff007f;
+}
+
+.btn-turno:hover {
+  background: #ff007f;
+  color: #0a0a0c;
+  box-shadow: 0 0 15px #ff007f;
+}
+
+/* Terminal / Log do Jogo */
+.console-log {
+  background-color: #000;
+  border-left: 4px solid #39ff14;
+  padding: 15px;
+  margin-bottom: 25px;
+  font-family: 'Consolas', monospace;
+  color: #39ff14;
+  box-shadow: inset 0 0 10px rgba(57, 255, 20, 0.1);
+}
+
+.console-log p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Grid de Missões */
+h3 {
+  color: #ff007f;
+  text-transform: uppercase;
+  border-bottom: 1px dashed #ff007f;
+  padding-bottom: 5px;
+}
+
+.missoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.missao-card {
+  background: #111;
+  border: 1px solid #333;
+  padding: 20px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.missao-card:hover {
+  transform: translateY(-3px);
+  border-color: #00f3ff;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.missao-card h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.missao-card p {
+  margin: 0;
+  color: #aaa;
+}
+
+.missao-card button {
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+
+/* Loading e Erros */
+.loading-container {
+  text-align: center;
+  padding: 50px;
+  color: #00f3ff;
+}
+
+.missao-card button.btn-disabled {
+  background: #333;
+  color: #666;
+  border-color: #333;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.missao-card button.btn-disabled:hover {
+  background: #333;
+  color: #666;
+  box-shadow: none;
+}
+
+.text-danger {
+  color: #ff3333;
+  text-shadow: 0 0 5px rgba(255, 51, 51, 0.4);
+}
+
+/* TELA DE GAME OVER */
+.game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 10, 12, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.game-over-modal {
+  background: #1a0505;
+  border: 2px solid #ff3333;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 0 40px rgba(255, 51, 51, 0.5);
+  animation: pulse-red 2s infinite;
+}
+
+.game-over-modal h1 {
+  color: #ff3333;
+  font-size: 2.5rem;
+  margin-top: 0;
+  text-shadow: 0 0 20px #ff3333;
+}
+
+.warning-text {
+  color: #ff3333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.btn-game-over {
+  margin-top: 30px;
+  background: transparent;
+  border: 2px solid #ff3333;
+  color: #ff3333;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.btn-game-over:hover {
+  background: #ff3333;
+  color: #1a0505;
+  box-shadow: 0 0 20px #ff3333;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4); }
+  50% { box-shadow: 0 0 50px rgba(255, 51, 51, 0.8); }
+  100% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4); }
+}

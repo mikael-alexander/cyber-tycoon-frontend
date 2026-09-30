@@ -1,0 +1,53 @@
+<div class="login-container">
+  <div class="login-box">
+    <h1>>_ CYBER TYCOON</h1>
+    <p class="subtitle">Acesse a Rede corporativa</p>
+
+    <div *ngIf="carregando" class="loading">
+      Estabelecendo conexão...
+    </div>
+
+    <div *ngIf="erro" class="error-box">
+      {{ erro }}
+    </div>
+
+    <div *ngIf="!carregando && !erro" class="actions">
+      
+      <!-- Criar Novo Jogo -->
+      <div class="action-card">
+        <h3>[ NOVO HACKER ]</h3>
+        <p>Registre um novo alias na rede.</p>
+        <div class="input-group">
+          <input #nomeInput type="text" placeholder="Digite seu apelido..." (keyup.enter)="criarNovoJogo(nomeInput.value)">
+          <button class="btn-primary" (click)="criarNovoJogo(nomeInput.value)">Criar</button>
+        </div>
+      </div>
+
+      <div class="divider">ou</div>
+
+      <!-- Continuar Jogo -->
+      <div class="action-card">
+        <h3>[ CONTINUAR ]</h3>
+        <p>Selecione um perfil existente:</p>
+        
+        <div *ngIf="jogadores.length === 0" class="empty-msg">
+          Nenhum perfil encontrado no banco de dados.
+        </div>
+        
+        <div class="player-list">
+          <div class="player-row" *ngFor="let j of jogadores">
+            <button class="btn-player" (click)="entrarNoJogo(j.id)">
+              <span class="p-id">#{{ j.id }}</span>
+              <span class="p-nome">{{ j.nome }}</span>
+              <span class="p-info">Dia {{ j.diaAtual }} &nbsp;|&nbsp; R$ {{ j.dinheiro | number:'1.0-0' }}</span>
+            </button>
+            <button class="btn-delete" (click)="deletarJogador($event, j.id, j.nome)" title="Deletar perfil">
+              🗑
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
