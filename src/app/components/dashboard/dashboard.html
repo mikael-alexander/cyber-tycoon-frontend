@@ -19,6 +19,31 @@
   <div class="console-log">
     <p>>_ {{ logDoJogo }}</p>
   </div>
+  
+  <!-- MERCADO DE HACKERS -->
+  <h3 class="section-title">👥 Mercado Obscuro (Contrate Especialistas):</h3>
+  <div class="hackers-grid">
+    <div class="hacker-card" *ngFor="let h of mercadoHackers">
+      <div class="hacker-header">
+        <span class="hacker-avatar">🕵️</span>
+        <h4>{{ h.nome }}</h4>
+      </div>
+      <div class="hacker-stats">
+        <p><strong>⚔️ Ataque:</strong> +{{ h.ataque }}</p>
+        <p><strong>🛡️ Defesa:</strong> +{{ h.defesa }}</p>
+      </div>
+      <div class="hacker-price">
+        <p><strong>💸 Diária:</strong> R$ {{ h.salarioDiario | number:'1.2-2' }}</p>
+      </div>
+      <button class="btn-hire" (click)="contratarHacker(h)">
+        🤝 Contratar
+      </button>
+    </div>
+    
+    <div *ngIf="mercadoHackers.length === 0" class="empty-market">
+      <p>🚫 Nenhum especialista disponível no submundo hoje. Tente avançar o dia.</p>
+    </div>
+  </div>
 
   <!-- Lista de Missões -->
   <h3>🎯 Missões Disponíveis:</h3>
